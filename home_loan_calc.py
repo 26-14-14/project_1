@@ -3,8 +3,17 @@
 from flask import Flask, render_template, request, redirect, url_for
 
 
-def calculate_monthly_payment(principal, annual_rate, years):
-    """Calculates the fixed monthly mortgage payment."""
+def calculate_monthly_payment(principal: float, annual_rate: float, years: float) -> float:
+    """ Calculates the fixed monthly mortgage payment using the amortization formula.
+
+    Args:
+        principal (float): Total Amount of the loan borrowed (the present value).
+        annual_rate (float): Yearly Interest Rate expressed as a decimal (e.g., 0.05 for 5%).
+        years (float): Total duration of the loan in years.
+
+    Returns:
+        float: Fixed Monthly Payment Amount.
+    """
 
     # 1. Convert annual rate percentage to monthly decimal rate
     monthly_rate = (annual_rate / 100) / 12
@@ -32,8 +41,13 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET', 'POST'])
-def index():
-    # Initialize the result variable
+def index() -> str:
+    """Initialize the result variable.
+
+    Returns:
+        str: The HTML content of the main loan calculator page, which includes 
+             the form and, optionally, the calculated monthly payment result.
+    """
     monthly_payment = None
 
     if request.method == 'POST':
